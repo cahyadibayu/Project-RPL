@@ -1,0 +1,147 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:0cm;
+	line-height:107%;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+.MsoChpDefault
+	{font-family:"Calibri",sans-serif;}
+.MsoPapDefault
+	{margin-bottom:8.0pt;
+	line-height:107%;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-US>
+
+<div class=WordSection1>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+150%'><span style='font-size:12.0pt;line-height:150%;font-family:"Times New Roman",serif'>Base
+and Limit Registers</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+150%'><span style='font-size:12.0pt;line-height:150%;font-family:"Times New Roman",serif'>Solusi
+ini menggunakan versi sederhana dari <b>dynamic relocation</b>. yang dilakukan
+adalah memetakan setiap address space dari proses ke bagian lain dari memory
+fisik dengan cara yang sederhana. Solusi ini digunakan untuk mesin dari CDC
+6600 hingga Intel 8088, yang mana solusi yang diterapkan adalah melengkapi CPU
+dengan 2 hardware special yang biasa disebut register base dan register limit. </span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+150%'><span style='font-size:12.0pt;line-height:150%;font-family:"Times New Roman",serif'>Ketika
+register ini digunakan, program dimuat ke dalam memori secara berturut-turut
+dimanapun ketika ada ruang yang bisa diisi dan tanpa melakukan relokasi saat
+pemuatan. </span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+150%'>
+
+<table cellpadding=0 cellspacing=0>
+ <tr>
+  <td width=284 height=0></td>
+ </tr>
+ <tr>
+  <td></td>
+  <td><img width=257 height=314
+  src="Base%20and%20Limit%20Registers_files/image001.jpg"></td>
+ </tr>
+</table>
+
+<br clear=ALL>
+<span style='font-size:12.0pt;line-height:150%;font-family:"Times New Roman",serif'>Ketika
+proses berjalan, register base dimuat dengan address fisik dimana program
+dimulai di memory dan register limit dimuat dengan panjang dari program. </span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+150%'><span style='font-size:12.0pt;line-height:150%;font-family:"Times New Roman",serif'>Setiap
+kali sebuah proses mereferensikan memory, entah itu mengambil instruksi atau
+membaca atau menulis data bertipe word, hardware CPU secara otomatis
+menambahkan nilai base ke alamat yang dibuat oleh proses sebelum mengirim
+alamat keluar pada memory bus.</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+150%'><span style='font-size:12.0pt;line-height:150%;font-family:"Times New Roman",serif'>Pada
+saat yang bersamaan, hardware cpu akan memeriksa apakah alamat yang ditawarkan
+setara atau lebih besar dari nilai yang berada di register limit, yang mana
+bila lebih besar dari register limit akan mengakibatkan kesalahan dan akses akan
+dibatalkan.</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+150%'><span style='font-size:12.0pt;line-height:150%;font-family:"Times New Roman",serif'>Oleh
+sebab itu pada gambar instruksi pertama dari program kedua mengeksekusikan</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+150%'><b><span style='font-size:12.0pt;line-height:150%;font-family:"Times New Roman",serif'>JMP
+28</span></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+150%'><span style='font-size:12.0pt;line-height:150%;font-family:"Times New Roman",serif'>Tetapi
+hardware akan menganggap intruksi itu sebagai</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+150%'><b><span style='font-size:12.0pt;line-height:150%;font-family:"Times New Roman",serif'>JMP
+16412</span></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+150%'><span style='font-size:12.0pt;line-height:150%;font-family:"Times New Roman",serif'>Menggunakan
+register base dan limit adalah cara mudah untuk memberi setiap proses ruang alamat
+pribadinya masing-masing karena setiap alamat memory yang dihasilkan secara
+otomatis akan diisi dengan nilai register base sebelum dikirim ke memori. Dalam
+banyak implementasi, register base dan limit dilindungi sedemikian rupa
+sehingga hanya system operasi yang dapat memodifikasinya.</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+150%'><span style='font-size:12.0pt;line-height:150%;font-family:"Times New Roman",serif'>Kekurangan
+dari merelokasi dengan menggunakan register base dan limit adalah diperlukannya
+proses penambahan dan pembandingan pada setiap referensi memori. Pembandingan
+dapat berjalan dengan cepat tapi pertambahan akan berjalan dengan lambat.</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+150%'><span style='font-size:12.0pt;line-height:150%;font-family:"Times New Roman",serif'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+150%'><span style='font-size:12.0pt;line-height:150%;font-family:"Times New Roman",serif'>Swapping</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+150%'><span style='font-size:12.0pt;line-height:150%;font-family:"Times New Roman",serif'>Terdapat
+dua pendekatan umum untuk mengatasi memory overload (kelebihan memori),
+strategi paling sederhana adalah swapping, yaitu dengan mengeluarkan setiap
+proses secara keseluruhan, menjalankan untuk beberapa saat, kemudian
+memasukkannya kembali ke disk. Proses yang diam lebih sering disimpan di disk,
+jadi proses tidak mengambil memori ketika proses tidak berjalan.</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+150%'><span style='font-size:12.0pt;line-height:150%;font-family:"Times New Roman",serif'>Strategi
+kedua disebut dengan virtual memory, yang mana memperbolehkan program untuk
+berjalan walaupun program tersebut sebagian masih berada di main memory.</span></p>
+
+</div>
+
+</body>
+
+</html>
